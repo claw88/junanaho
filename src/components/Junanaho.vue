@@ -204,6 +204,45 @@ export default {
         { id: 66, name: "??" },
         { id: 67, name: "??" },
       ],
+      initialRiver: [{ id: 100, name: "->" }],
+      initialPool: [
+        { id: 34, name: "??" },
+        { id: 35, name: "??" },
+        { id: 36, name: "??" },
+        { id: 37, name: "??" },
+        { id: 38, name: "??" },
+        { id: 39, name: "??" },
+        { id: 40, name: "??" },
+        { id: 41, name: "??" },
+        { id: 42, name: "??" },
+        { id: 43, name: "??" },
+        { id: 44, name: "??" },
+        { id: 45, name: "??" },
+        { id: 46, name: "??" },
+        { id: 47, name: "??" },
+        { id: 48, name: "??" },
+        { id: 49, name: "??" },
+        { id: 50, name: "??" },
+        { id: 51, name: "??" },
+        { id: 52, name: "??" },
+        { id: 53, name: "??" },
+        { id: 54, name: "??" },
+      ],
+      initialHand: [
+        { id: 55, name: "??" },
+        { id: 56, name: "??" },
+        { id: 57, name: "??" },
+        { id: 58, name: "??" },
+        { id: 59, name: "??" },
+        { id: 60, name: "??" },
+        { id: 61, name: "??" },
+        { id: 62, name: "??" },
+        { id: 63, name: "??" },
+        { id: 64, name: "??" },
+        { id: 65, name: "??" },
+        { id: 66, name: "??" },
+        { id: 67, name: "??" },
+      ],
       dora: "??",
       uradora: "??",
       status: {
@@ -263,10 +302,10 @@ export default {
         uradora: arr[69],
         p1Pool: p1Tiles.slice(0, 21),
         p1Hand: p1Tiles.slice(21),
-        p1River: this.p1River,
+        p1River: this.initialRiver,
         p2Pool: p2Tiles.slice(0, 21),
         p2Hand: p2Tiles.slice(21),
-        p2River: this.p2River,
+        p2River: this.initialRiver,
       });
       console.log("initialize finish.");
     },
@@ -278,6 +317,11 @@ export default {
         this.p1Hand = snapshot.val()["p1Hand"];
       });
       this.riverConnect();
+
+      this.p2Pool = this.initialPool;
+      this.p2Hand = this.initialHand;
+      this.uradora = "??";
+
       console.log("start as p1.");
     },
     p2Start() {
@@ -288,6 +332,11 @@ export default {
         this.p2Hand = snapshot.val()["p2Hand"];
       });
       this.riverConnect();
+
+      this.p1Pool = this.initialPool;
+      this.p1Hand = this.initialHand;
+      this.uradora = "??";
+
       console.log("start as p2.");
     },
     riverConnect() {
