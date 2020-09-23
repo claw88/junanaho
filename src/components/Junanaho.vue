@@ -289,7 +289,7 @@ export default {
       console.log("test");
     },
     initialize() {
-      resetRef();
+      this.resetRef();
 
       const mm = ["m1", "m2", "m3", "m4", "m5", "m6", "m7", "m8", "m9"];
       const pp = ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9"];
@@ -335,7 +335,7 @@ export default {
       console.log("initialize finish.");
     },
     p1Start() {
-      resetRef();
+      this.resetRef();
 
       const gameRef = firebase.database().ref("/game");
       gameRef.once("value", (snapshot) => {
@@ -344,6 +344,7 @@ export default {
         this.p1Hand = snapshot.val()["p1Hand"];
       });
 
+      const p2Ref = firebase.database().ref("/game/p2River");
       p2Ref.on("value", (snapshot) => {
         this.p2River = snapshot.val();
         console.log("p2RiverRef");
@@ -356,7 +357,7 @@ export default {
       console.log("start as p1.");
     },
     p2Start() {
-      resetRef();
+      this.resetRef();
 
       const gameRef = firebase.database().ref("/game");
       gameRef.once("value", (snapshot) => {
@@ -366,7 +367,6 @@ export default {
       });
 
       const p1Ref = firebase.database().ref("/game/p1River");
-      p1Ref.off();
       p1Ref.on("value", (snapshot) => {
         this.p1River = snapshot.val();
         console.log("p1RiverRef");
@@ -379,7 +379,7 @@ export default {
       console.log("start as p2.");
     },
     win() {
-      resetRef();
+      this.resetRef();
 
       const gameRef = firebase.database().ref("/game");
       gameRef.update({
@@ -392,7 +392,7 @@ export default {
       console.log("I win.");
     },
     lose() {
-      resetRef();
+      this.resetRef();
 
       const gameRef = firebase.database().ref("/game");
       gameRef.once("value", (snapshot) => {
