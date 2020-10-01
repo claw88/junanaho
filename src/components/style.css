@@ -14,6 +14,9 @@
 .tile:active {
   cursor: grabbing;
 }
+.fixedtile{
+  display: inline-block;
+}
 .sortable-chosen {
   background-color: #42b983;
 }

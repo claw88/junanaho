@@ -28,7 +28,6 @@ export default {
   data() {
     return {
       options: {
-        group: "myGroup",
         animation: 200,
         filter: ".fixed",
       },

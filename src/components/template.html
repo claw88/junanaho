@@ -1,7 +1,7 @@
 <div>
   <div>
     <h3>P2の手牌（{{ p2Hand.length }}）</h3>
-    <draggable v-model="p2Hand" group="myGroup" :options="options">
+    <draggable v-model="p2Hand" v-bind="options" group="p2">
       <div class="tile" v-for="tile in p2Hand" :key="tile.id" :class="isFixed(false)">
         <img v-bind:src="parseImg(tile.name)" v-bind:alt="tile.name" v-bind:title="tile.name" />
       </div>
@@ -9,7 +9,7 @@
   </div>
   <div>
     <h3>P2の打牌候補（{{ p2Pool.length }}）</h3>
-    <draggable v-model="p2Pool" group="myGroup" :options="options">
+    <draggable v-model="p2Pool" v-bind="options" group="p2">
       <div class="tile" v-for="tile in p2Pool" :key="tile.id" :class="isFixed(false)">
         <img v-bind:src="parseImg(tile.name)" v-bind:alt="tile.name" v-bind:title="tile.name" />
       </div>
@@ -17,35 +17,35 @@
   </div>
   <div>
     <h3>P2の河（{{ p2River.length - 1 }}）</h3>
-    <draggable v-model="p2River" group="myGroup" :options="options" @add="onP2Add">
-      <div class="tile" v-for="tile in p2River" :key="tile.id" :class="isFixed(true)">
+    <draggable v-model="p2River" v-bind="options" @add="onP2Add" group="p2">
+      <div class="fixedtile" v-for="tile in p2River" :key="tile.id" :class="isFixed(true)">
         <img v-bind:src="parseImg(tile.name)" v-bind:alt="tile.name" v-bind:title="tile.name" />
       </div>
     </draggable>
   </div>
   <div class="dora">
     <h3>ドラ表</h3>
-    <div class="tile">
+    <div class="fixedtile">
       <img v-bind:src="parseImg(dora)" v-bind:alt="dora" v-bind:title="dora" />
     </div>
   </div>
   <div class="dora">
     <h3>裏ドラ表</h3>
-    <div class="tile">
+    <div class="fixedtile">
       <img v-bind:src="parseImg(uradora)" v-bind:alt="uradora" v-bind:title="uradora" />
     </div>
   </div>
   <div>
     <h3>P1の河（{{ p1River.length - 1 }}）</h3>
-    <draggable v-model="p1River" group="myGroup" :options="options" @add="onP1Add">
-      <div class="tile" v-for="tile in p1River" :key="tile.id" :class="isFixed(true)">
+    <draggable v-model="p1River" v-bind="options" @add="onP1Add" group="p1">
+      <div class="fixedtile" v-for="tile in p1River" :key="tile.id" :class="isFixed(true)">
         <img v-bind:src="parseImg(tile.name)" v-bind:alt="tile.name" v-bind:title="tile.name" />
       </div>
     </draggable>
   </div>
   <div>
     <h3>P1の打牌候補 （{{ p1Pool.length }}）</h3>
-    <draggable v-model="p1Pool" group="myGroup" :options="options">
+    <draggable v-model="p1Pool" v-bind="options" group="p1">
       <div class="tile" v-for="tile in p1Pool" :key="tile.id" :class="isFixed(false)">
         <img v-bind:src="parseImg(tile.name)" v-bind:alt="tile.name" v-bind:title="tile.name" />
       </div>
@@ -53,7 +53,7 @@
   </div>
   <div>
     <h3>P1の手牌（{{ p1Hand.length }}）</h3>
-    <draggable v-model="p1Hand" group="myGroup" :options="options">
+    <draggable v-model="p1Hand" v-bind="options" group="p1">
       <div class="tile" v-for="tile in p1Hand" :key="tile.id" :class="isFixed(false)">
         <img v-bind:src="parseImg(tile.name)" v-bind:alt="tile.name" v-bind:title="tile.name" />
       </div>
