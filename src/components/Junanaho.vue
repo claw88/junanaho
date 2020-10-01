@@ -9,7 +9,11 @@
           :key="tile.id"
           :class="isFixed(false)"
         >
-          {{ tile.name }}
+          <img
+            v-bind:src="parseImg(tile.name)"
+            v-bind:alt="tile.name"
+            v-bind:title="tile.name"
+          />
         </div>
       </draggable>
     </div>
@@ -22,7 +26,11 @@
           :key="tile.id"
           :class="isFixed(false)"
         >
-          {{ tile.name }}
+          <img
+            v-bind:src="parseImg(tile.name)"
+            v-bind:alt="tile.name"
+            v-bind:title="tile.name"
+          />
         </div>
       </draggable>
     </div>
@@ -40,17 +48,33 @@
           :key="tile.id"
           :class="isFixed(true)"
         >
-          {{ tile.name }}
+          <img
+            v-bind:src="parseImg(tile.name)"
+            v-bind:alt="tile.name"
+            v-bind:title="tile.name"
+          />
         </div>
       </draggable>
     </div>
     <div class="dora">
       <h3>ドラ表</h3>
-      <div class="tile">{{ dora }}</div>
+      <div class="tile">
+        <img
+          v-bind:src="parseImg(dora)"
+          v-bind:alt="dora"
+          v-bind:title="dora"
+        />
+      </div>
     </div>
     <div class="dora">
       <h3>裏ドラ表</h3>
-      <div class="tile">{{ uradora }}</div>
+      <div class="tile">
+        <img
+          v-bind:src="parseImg(uradora)"
+          v-bind:alt="uradora"
+          v-bind:title="uradora"
+        />
+      </div>
     </div>
     <div>
       <h3>P1の河（{{ p1River.length - 1 }}）</h3>
@@ -66,7 +90,11 @@
           :key="tile.id"
           :class="isFixed(true)"
         >
-          {{ tile.name }}
+          <img
+            v-bind:src="parseImg(tile.name)"
+            v-bind:alt="tile.name"
+            v-bind:title="tile.name"
+          />
         </div>
       </draggable>
     </div>
@@ -79,7 +107,11 @@
           :key="tile.id"
           :class="isFixed(false)"
         >
-          {{ tile.name }}
+          <img
+            v-bind:src="parseImg(tile.name)"
+            v-bind:alt="tile.name"
+            v-bind:title="tile.name"
+          />
         </div>
       </draggable>
     </div>
@@ -92,7 +124,11 @@
           :key="tile.id"
           :class="isFixed(false)"
         >
-          {{ tile.name }}
+          <img
+            v-bind:src="parseImg(tile.name)"
+            v-bind:alt="tile.name"
+            v-bind:title="tile.name"
+          />
         </div>
       </draggable>
     </div>
@@ -408,7 +444,6 @@ export default {
       const p2Ref = firebase.database().ref("/game/p2River");
       p2Ref.off();
     },
-    // フィルタされている要素を選択した時（filterイベント）
     onFilter() {
       console.log("onFilter");
       this.status.fixed = true;
@@ -430,6 +465,12 @@ export default {
         p2River: this.p2River,
       });
     },
+    parseImg(name) {
+      if (name == "??" || name == "->") {
+        name = "tile";
+      }
+      return require("../assets/img/" + name + ".png");
+    },
   },
 };
 </script>
@@ -444,11 +485,6 @@ export default {
 }
 .tile {
   display: inline-block;
-  margin: 0px;
-  padding: 10px;
-  border: 1px solid #7f7f7f;
-  border-radius: 10px;
-  background-color: #ffffff;
 }
 .tile:hover {
   cursor: grab;
