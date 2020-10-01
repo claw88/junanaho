@@ -301,13 +301,6 @@ export default {
       const p2Ref = firebase.database().ref("/game/p2River");
       p2Ref.off();
     },
-    onFilter() {
-      console.log("onFilter");
-      this.status.fixed = true;
-      setTimeout(() => {
-        this.status.fixed = false;
-      }, 1000);
-    },
     onP1Add() {
       console.log("onP1Add");
       const gameRef = firebase.database().ref("/game");
