@@ -211,8 +211,8 @@ export default {
         p2Pool: p2Tiles.slice(0, 21),
         p2Hand: p2Tiles.slice(21),
         p2River: this.initialRiver,
+        status: 0,
       });
-
       console.log("initialize finish.");
     },
     p1Start() {
@@ -229,6 +229,12 @@ export default {
       p2Ref.on("value", (snapshot) => {
         this.p2River = snapshot.val();
         console.log("p2RiverRef");
+      });
+      const statusRef = firebase.database().ref("/game/status");
+      statusRef.on("value", (snapshot) => {
+        if (snapshot.val() == 1) {
+          this.lose();
+        }
       });
 
       this.p2Pool = this.initialPool;
@@ -252,6 +258,12 @@ export default {
         this.p1River = snapshot.val();
         console.log("p1RiverRef");
       });
+      const statusRef = firebase.database().ref("/game/status");
+      statusRef.on("value", (snapshot) => {
+        if (snapshot.val() == 1) {
+          this.lose();
+        }
+      });
 
       this.p1Pool = this.initialPool;
       this.p1Hand = this.initialHand;
@@ -266,6 +278,7 @@ export default {
       gameRef.update({
         p1Hand: this.p1Hand,
         p2Hand: this.p2Hand,
+        status: 1,
       });
       gameRef.once("value", (snapshot) => {
         this.uradora = snapshot.val()["uradora"];
