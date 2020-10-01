@@ -146,7 +146,7 @@
       <button v-on:click="win">栄和</button>
     </div>
     <div class="button">
-      <button v-on:click="lose">放銃</button>
+      <button v-on:click="sorting">理牌</button>
     </div>
   </div>
 </template>
@@ -438,6 +438,18 @@ export default {
       });
       console.log("I lose.");
     },
+    sorting() {
+      this.p1Pool.sort(this.compareFunc);
+      this.p1Hand.sort(this.compareFunc);
+      this.p2Pool.sort(this.compareFunc);
+      this.p2Hand.sort(this.compareFunc);
+      console.log("sorting finish.");
+    },
+    compareFunc(a, b) {
+      if (a.name < b.name) return -1;
+      if (a.name > b.name) return 1;
+      return 0;
+    },
     resetRef() {
       const p1Ref = firebase.database().ref("/game/p1River");
       p1Ref.off();
@@ -466,8 +478,11 @@ export default {
       });
     },
     parseImg(name) {
-      if (name == "??" || name == "->") {
+      if (name == "??") {
         name = "tile";
+      }
+      if (name == "->") {
+        name = "je";
       }
       return require("../assets/img/" + name + ".png");
     },
