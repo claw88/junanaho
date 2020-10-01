@@ -169,6 +169,8 @@ export default {
 
   methods: {
     initialize() {
+      this.listernerOff();
+
       const mm = ["m1", "m2", "m3", "m4", "m5", "m6", "m7", "m8", "m9"];
       const pp = ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9"];
       const ss = ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9"];
@@ -274,6 +276,8 @@ export default {
       console.log("start as p2.");
     },
     win() {
+      this.listernerOff();
+
       const gameRef = firebase.database().ref("/game");
       gameRef.update({
         p1Hand: this.p1Hand,
@@ -286,6 +290,8 @@ export default {
       console.log("I win.");
     },
     lose() {
+      this.listernerOff();
+
       const gameRef = firebase.database().ref("/game");
       gameRef.once("value", (snapshot) => {
         this.uradora = snapshot.val()["uradora"];
