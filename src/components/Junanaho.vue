@@ -6,7 +6,6 @@ import draggable from "vuedraggable";
 import * as firebase from "firebase/app";
 import "firebase/database";
 import "firebase/analytics";
-//import Vue from 'vue'
 
 const firebaseConfig = {
   apiKey: process.env.VUE_APP_API_KEY,
@@ -18,7 +17,6 @@ const firebaseConfig = {
   appId: process.env.VUE_APP_APP_ID,
   measurementId: process.env.VUE_APP_MEASUREMENT_ID,
 };
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
@@ -171,9 +169,6 @@ export default {
   },
 
   methods: {
-    test() {
-      console.log("test");
-    },
     initialize() {
       this.resetRef();
 
