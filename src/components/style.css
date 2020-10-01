@@ -1,0 +1,19 @@
+.dora {
+  display: inline-block;
+  width: 80px;
+}
+.button {
+  display: inline-block;
+}
+.tile {
+  display: inline-block;
+}
+.tile:hover {
+  cursor: grab;
+}
+.tile:active {
+  cursor: grabbing;
+}
+.sortable-chosen {
+  background-color: #42b983;
+}
