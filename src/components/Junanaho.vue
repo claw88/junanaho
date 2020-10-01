@@ -170,8 +170,6 @@ export default {
 
   methods: {
     initialize() {
-      this.resetRef();
-
       const mm = ["m1", "m2", "m3", "m4", "m5", "m6", "m7", "m8", "m9"];
       const pp = ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9"];
       const ss = ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9"];
@@ -213,10 +211,11 @@ export default {
         p2River: this.initialRiver,
         status: 0,
       });
+
       console.log("initialize finish.");
     },
     p1Start() {
-      this.resetRef();
+      this.listernerOff();
 
       const gameRef = firebase.database().ref("/game");
       gameRef.once("value", (snapshot) => {
@@ -239,12 +238,14 @@ export default {
 
       this.p2Pool = this.initialPool;
       this.p2Hand = this.initialHand;
+      this.p1River = this.initialRiver;
+      this.p2River = this.initialRiver;
       this.uradora = "??";
 
       console.log("start as p1.");
     },
     p2Start() {
-      this.resetRef();
+      this.listernerOff();
 
       const gameRef = firebase.database().ref("/game");
       gameRef.once("value", (snapshot) => {
@@ -267,13 +268,13 @@ export default {
 
       this.p1Pool = this.initialPool;
       this.p1Hand = this.initialHand;
+      this.p1River = this.initialRiver;
+      this.p2River = this.initialRiver;
       this.uradora = "??";
 
       console.log("start as p2.");
     },
     win() {
-      this.resetRef();
-
       const gameRef = firebase.database().ref("/game");
       gameRef.update({
         p1Hand: this.p1Hand,
@@ -286,8 +287,6 @@ export default {
       console.log("I win.");
     },
     lose() {
-      this.resetRef();
-
       const gameRef = firebase.database().ref("/game");
       gameRef.once("value", (snapshot) => {
         this.uradora = snapshot.val()["uradora"];
@@ -308,11 +307,13 @@ export default {
       if (a.name > b.name) return 1;
       return 0;
     },
-    resetRef() {
+    listernerOff() {
       const p1Ref = firebase.database().ref("/game/p1River");
       p1Ref.off();
       const p2Ref = firebase.database().ref("/game/p2River");
       p2Ref.off();
+      const statusRef = firebase.database().ref("/game/status");
+      statusRef.off();
     },
     onP1Add() {
       console.log("onP1Add");
