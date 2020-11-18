@@ -1,4 +1,8 @@
 # junanaho
+ブラウザで十七歩対人対戦
+
+## Screenshot
+![junanaho](https://github.com/claw88/junanaho/blob/screenshot/screenshot1.png)
 
 ## Project setup
 ```
