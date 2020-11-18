@@ -1,4 +1,17 @@
-<div>
+<div v-if="lobby">
+  junanaho<br>
+  <br>
+  <button v-on:click="createRoom">ルーム作成</button><br>
+  <br>
+  <input type="text" maxlength="4" v-model="roomId" placeholder="Room ID"><button v-on:click="joinRoom">ルーム参加</button>
+</div>
+
+<div v-else>
+  <div>
+    <p>
+      Room ID: {{roomId}}<br>
+    </p>
+  </div>
   <div>
     <h3>P2の手牌（{{ p2Hand.length }}）</h3>
     <draggable v-model="p2Hand" v-bind="options" group="p2">

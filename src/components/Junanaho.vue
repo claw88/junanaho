@@ -27,6 +27,7 @@ export default {
 
   data() {
     return {
+      lobby: true,
       options: {
         animation: 200,
         filter: ".fixed",
@@ -154,6 +155,8 @@ export default {
         moving: false,
         fixed: false,
       },
+      id: "",
+      roomId: "",
     };
   },
 
@@ -168,6 +171,36 @@ export default {
   },
 
   methods: {
+    createId() {
+      return String(Math.random()).substr(2, 4);
+    },
+    createRoom() {
+      this.roomId = this.createId();
+      this.id = this.roomId;
+      this.lobby = false;
+      this.initialize();
+      this.p1Start();
+    },
+    joinRoom() {
+      if (this.roomId == "") {
+        alert("ルームがありません");
+        return;
+      }
+      const gameRef = firebase.database().ref("/game/" + this.roomId);
+      gameRef.once("value", (snapshot) => {
+        if (!snapshot.val()) {
+          alert("ルームがありません");
+          return;
+        }
+      });
+
+      do {
+        this.id = this.createId();
+      } while (this.id == this.roomId);
+
+      this.lobby = false;
+      this.p2Start();
+    },
     initialize() {
       this.listernerOff();
 
@@ -200,7 +233,7 @@ export default {
         cnt++;
       }
 
-      const gameRef = firebase.database().ref("/game");
+      const gameRef = firebase.database().ref("/game/" + this.roomId);
       gameRef.set({
         dora: arr[68],
         uradora: arr[69],
@@ -218,19 +251,23 @@ export default {
     p1Start() {
       this.listernerOff();
 
-      const gameRef = firebase.database().ref("/game");
+      const gameRef = firebase.database().ref("/game/" + this.roomId);
       gameRef.once("value", (snapshot) => {
         this.dora = snapshot.val()["dora"];
         this.p1Pool = snapshot.val()["p1Pool"];
         this.p1Hand = snapshot.val()["p1Hand"];
       });
 
-      const p2Ref = firebase.database().ref("/game/p2River");
+      const p2Ref = firebase
+        .database()
+        .ref("/game/" + this.roomId + "/p2River");
       p2Ref.on("value", (snapshot) => {
         this.p2River = snapshot.val();
         console.log("p2RiverRef");
       });
-      const statusRef = firebase.database().ref("/game/status");
+      const statusRef = firebase
+        .database()
+        .ref("/game/" + this.roomId + "/status");
       statusRef.on("value", (snapshot) => {
         if (snapshot.val() == 1) {
           this.lose();
@@ -248,19 +285,23 @@ export default {
     p2Start() {
       this.listernerOff();
 
-      const gameRef = firebase.database().ref("/game");
+      const gameRef = firebase.database().ref("/game/" + this.roomId);
       gameRef.once("value", (snapshot) => {
         this.dora = snapshot.val()["dora"];
         this.p2Pool = snapshot.val()["p2Pool"];
         this.p2Hand = snapshot.val()["p2Hand"];
       });
 
-      const p1Ref = firebase.database().ref("/game/p1River");
+      const p1Ref = firebase
+        .database()
+        .ref("/game/" + this.roomId + "/p1River");
       p1Ref.on("value", (snapshot) => {
         this.p1River = snapshot.val();
         console.log("p1RiverRef");
       });
-      const statusRef = firebase.database().ref("/game/status");
+      const statusRef = firebase
+        .database()
+        .ref("/game/" + this.roomId + "/status");
       statusRef.on("value", (snapshot) => {
         if (snapshot.val() == 1) {
           this.lose();
@@ -278,7 +319,7 @@ export default {
     win() {
       this.listernerOff();
 
-      const gameRef = firebase.database().ref("/game");
+      const gameRef = firebase.database().ref("/game/" + this.roomId);
       gameRef.update({
         p1Hand: this.p1Hand,
         p2Hand: this.p2Hand,
@@ -292,7 +333,7 @@ export default {
     lose() {
       this.listernerOff();
 
-      const gameRef = firebase.database().ref("/game");
+      const gameRef = firebase.database().ref("/game/" + this.roomId);
       gameRef.once("value", (snapshot) => {
         this.uradora = snapshot.val()["uradora"];
         this.p1Hand = snapshot.val()["p1Hand"];
@@ -313,23 +354,29 @@ export default {
       return 0;
     },
     listernerOff() {
-      const p1Ref = firebase.database().ref("/game/p1River");
+      const p1Ref = firebase
+        .database()
+        .ref("/game/" + this.roomId + "/p1River");
       p1Ref.off();
-      const p2Ref = firebase.database().ref("/game/p2River");
+      const p2Ref = firebase
+        .database()
+        .ref("/game/" + this.roomId + "/p2River");
       p2Ref.off();
-      const statusRef = firebase.database().ref("/game/status");
+      const statusRef = firebase
+        .database()
+        .ref("/game/" + this.roomId + "/status");
       statusRef.off();
     },
     onP1Add() {
       console.log("onP1Add");
-      const gameRef = firebase.database().ref("/game");
+      const gameRef = firebase.database().ref("/game/" + this.roomId);
       gameRef.update({
         p1River: this.p1River,
       });
     },
     onP2Add() {
       console.log("onP2Add");
-      const gameRef = firebase.database().ref("/game");
+      const gameRef = firebase.database().ref("/game/" + this.roomId);
       gameRef.update({
         p2River: this.p2River,
       });
